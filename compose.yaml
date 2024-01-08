@@ -14,10 +14,13 @@ services:
   app:
     restart: always
     build: ./services/web
-    command: gunicorn --bind 0.0.0.0:5000 main:app
-    expose:
+    command: python main.py run
+    ports:
       - 5000:5000
-    environment:
+    env_file:
       - ./.env
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=${DATABASE_URL}
     volumes:
       - ".:/app"
